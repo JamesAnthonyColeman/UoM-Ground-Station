@@ -1,6 +1,6 @@
 # UoM-Ground-Station
 This is the work of: 
-James Coleman
-Ildem Baymaz
+James Coleman,
+Ildem Baymaz and
 Jazib Imran
 
