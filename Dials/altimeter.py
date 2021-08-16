@@ -16,7 +16,8 @@ altimeter_font = pygame.font.SysFont('Calibri', 20, True, False)
 noscale1 = pygame.image.load('Assets/RF_Dial_Background.png')
 Dial= pygame.transform.scale(noscale1, (Width//3, Height//6))
 noscale2=pygame.image.load('Assets/Indicator_Background.png')
-Indicator = pygame.transform.scale(noscale2, (Width, Height))
+Indicator = pygame.transform.scale(noscale2, (Width, Height)).convert_alpha()
+Indicator.set_colorkey(0xFFFF00)
 
 margin_h = margin_w = 60 
 r = (Width - margin_w) / 2 # altimeter inside circle radius
