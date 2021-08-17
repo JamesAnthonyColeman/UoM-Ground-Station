@@ -60,8 +60,8 @@ class Airspeed():
         
         
         screen.blit(self.image, (self.rect.x, self.rect.y))
-        self.draw_text(str(self.data) , self.font, self.colour, (self.rect.x + 15), (self.rect.y + 200), screen) 
-        self.draw_text( 'TAS :' + str(self.data) , self.font2, self.colour, (self.rect.x + 13), (self.rect.y + 425), screen) 
+        self.draw_text(str(round(self.data,4)) , self.font, self.colour, (self.rect.x + 15), (self.rect.y + 200), screen) 
+        self.draw_text( 'TAS :' + str(round(self.data,4)) , self.font2, self.colour, (self.rect.x + 13), (self.rect.y + 425), screen) 
 
 
         

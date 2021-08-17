@@ -10,10 +10,14 @@ from Dials import airspeed_indicator
 from Dials import artificial_horizon
 from Dials import altimeter
 from Dials import compass
+from Dials import grapher
 from dronekit import connect, VehicleMode
 import time
+import datetime
 
+# Begin script
 pygame.init()
+Launch_time = datetime.datetime.now() # Date for starting the scrip. Used for data collection
 
 # Establishing a connection
 vehicle = connect('com7', wait_ready=True, baud=9600)
@@ -48,16 +52,19 @@ while run:
     horizon = artificial_horizon.Horizon(103,0)
     altimeter_dial = altimeter.Altitude(402, 0, data)
     compass_dial = compass.Compass(103, 300, 1, data)
+    Graph = grapher.Graph(703, 0, 2, 2, data, Launch_time)
     
     # Used for locating things on the page
     #pos = pygame.mouse.get_pos() 
     #print(pos)
 
     # Draw dials
+    
+    compass_dial.draw(screen)
+    Graph.draw(screen)
     airspeed_dial.draw(screen)
     horizon.update(screen,10 , 10)
     altimeter_dial.draw(screen)
-    compass_dial.draw(screen)
 
     #event handler
     for event in pygame.event.get():

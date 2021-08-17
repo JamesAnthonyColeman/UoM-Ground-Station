@@ -52,7 +52,7 @@ class Compass():
 
         screen.blit(self.image, (self.rect.x, self.rect.y))
         #screen.blit(self.image2, ((self.rect.x + (13*self.scale)), (self.rect.y + (13*self.scale))))
-        pos = (253, 445)
+        pos = (253, 450)
         
         # calcaulate the axis aligned bounding box of the rotated image
         w, h       = self.image2.get_size()
@@ -60,7 +60,7 @@ class Compass():
         box_rotate = [p.rotate(self.data) for p in box]
         min_box    = (min(box_rotate, key=lambda p: p[0])[0], min(box_rotate, key=lambda p: p[1])[1])
         max_box    = (max(box_rotate, key=lambda p: p[0])[0], max(box_rotate, key=lambda p: p[1])[1])
-        originPos = (135,135)
+        originPos = (137,137)
 
         # calculate the translation of the pivot 
         pivot        = pygame.math.Vector2(originPos[0], -originPos[1])
