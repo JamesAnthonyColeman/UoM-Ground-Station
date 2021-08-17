@@ -37,34 +37,58 @@ bg = pygame.image.load('Assets/grey.png').convert_alpha()
 bg = pygame.transform.scale(bg, (int(WIDTH), int(HEIGHT)))
 
 
+
+
+
+# Main screen
+#Should be of the dials that we have done as far and maby some more info/dials
+def Main():
+    run = True
+    while run:
+        # Get vehicle attributes
+        # For now the attribute will be pitch in degrees
+        data = math.degrees(vehicle.attitude.pitch)
+
+        # Dials defined
+        airspeed_dial = airspeed_indicator.Airspeed( 0, 0, 1, data, 0.4, -5, 0.185,0.125)
+        horizon = artificial_horizon.Horizon(103,0)
+        altimeter_dial = altimeter.Altitude(402, 0, data)
+        compass_dial = compass.Compass(103, 300, 1, data)
+        Graph = grapher.Graph(703, 0, 2, 2, data, Launch_time)
+        
+        # Used for locating things on the page
+        #pos = pygame.mouse.get_pos() 
+        #print(pos)
+
+        # Draw dials
+
+        compass_dial.draw(screen)
+        Graph.draw(screen)
+        airspeed_dial.draw(screen)
+        horizon.update(screen,10 , 10)
+        altimeter_dial.draw(screen)
+        
+        #event handler
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+            else:
+                pygame.display.update()
+
+
+
+
+
+
+
 # Program loop
 run = True
 while run:
     clock.tick(FPS)
     screen.blit(bg, (0,0))
 
-    # Get vehicle attributes
-    # For now the attribute will be pitch in degrees
-    data = math.degrees(vehicle.attitude.pitch)
-
-    # Dials defined
-    airspeed_dial = airspeed_indicator.Airspeed( 0, 0, 1, data, 0.4, -5, 0.185,0.125)
-    horizon = artificial_horizon.Horizon(103,0)
-    altimeter_dial = altimeter.Altitude(402, 0, data)
-    compass_dial = compass.Compass(103, 300, 1, data)
-    Graph = grapher.Graph(703, 0, 2, 2, data, Launch_time)
-    
-    # Used for locating things on the page
-    #pos = pygame.mouse.get_pos() 
-    #print(pos)
-
-    # Draw dials
-    
-    compass_dial.draw(screen)
-    Graph.draw(screen)
-    airspeed_dial.draw(screen)
-    horizon.update(screen,10 , 10)
-    altimeter_dial.draw(screen)
+    Main()
 
     #event handler
     for event in pygame.event.get():
@@ -74,4 +98,15 @@ while run:
 
 vehicle.close()
 pygame.quit()
+
+# Different windows are written as functions here
+
+# Front screen
+#Should include window resize, connect to mavlink, connection to different screen. by Esc key
+
+
+
+
+#Graphing monitor page 1
+#Should have a few graphs at a time taking in data.data
 
