@@ -35,7 +35,7 @@ class Graph():
         Y = sample_data.iloc[:,1]
         fig = pylab.figure(figsize=[self.width, self.height], dpi=100) # 100 dots per inch, so the resulting buffer is 400x400 pixels
         ax = fig.gca()
-        ax.plot(Y)
+        ax.plot(X,Y)
         canvas = agg.FigureCanvasAgg(fig)
         canvas.draw()
         renderer = canvas.get_renderer()
