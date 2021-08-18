@@ -11,12 +11,13 @@ import pylab
 
 class Graph():
     # Constructor
-    def __init__(self, x, y, width, height, Data, Date):
+    def __init__(self, x, y, width, height, Data, Data2, Date):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
-        self.data = Data
+        self.data1 = Data
+        self.data2=Data2
         self.date = Date
         self.title = str(Date.strftime("%Y-%m-%d-%H-%M-%S")) + ".csv"
         ExactTime = datetime.datetime.now()
@@ -25,7 +26,7 @@ class Graph():
         # Setting data as a csv file for current
         with open( self.title, 'a', newline='') as f:
             thewriter = csv.writer(f)
-            thewriter.writerow([Running_time , self.data])
+            thewriter.writerow([Running_time , self.data1, self.data2])
 
 
     def draw(self, screen):
