@@ -54,7 +54,7 @@ while run:
     horizon = artificial_horizon.Horizon(103,0)
     altimeter_dial = altimeter.Altitude(402, 0, data_altitude)
     compass_dial = compass.Compass(103, 300, 1, data)
-    Graph = grapher.Graph(703, 0, 2, 2, data, data_altitude, Launch_time)
+    Graph = grapher.Graph(403, 0, 3, 3, data, data_altitude, Launch_time)
     
     # Used for locating things on the page
     #pos = pygame.mouse.get_pos() 
