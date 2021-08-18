@@ -24,7 +24,7 @@ vehicle = connect('com7', wait_ready=True, baud=9600)
 print("Connecting to vehicle")
 
 # Variables
-WIDTH, HEIGHT = 900, 600
+WIDTH, HEIGHT = 1003, 600
 FPS = 60
 clock = pygame.time.Clock()
 
@@ -55,6 +55,8 @@ while run:
     altimeter_dial = altimeter.Altitude(402, 0, data_altitude)
     compass_dial = compass.Compass(103, 300, 1, data)
     Graph = grapher.Graph(403, 300, 3, 3, data, data_altitude, Launch_time)
+    
+
     
     # Used for locating things on the page
     #pos = pygame.mouse.get_pos() 
