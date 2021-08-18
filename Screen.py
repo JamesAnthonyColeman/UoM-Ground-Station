@@ -46,13 +46,15 @@ while run:
     # Get vehicle attributes
     # For now the attribute will be pitch in degrees
     data = math.degrees(vehicle.attitude.pitch)
+    data_altitude=vehicle.location.global_frame.alt
+
 
     # Dials defined
     airspeed_dial = airspeed_indicator.Airspeed( 0, 0, 1, data, 0.4, -5, 0.185,0.125)
     horizon = artificial_horizon.Horizon(103,0)
-    altimeter_dial = altimeter.Altitude(402, 0, data)
+    altimeter_dial = altimeter.Altitude(402, 0, data_altitude)
     compass_dial = compass.Compass(103, 300, 1, data)
-    Graph = grapher.Graph(703, 0, 2, 2, data, Launch_time)
+    Graph = grapher.Graph(703, 0, 2, 2, data, data_altitude, Launch_time)
     
     # Used for locating things on the page
     #pos = pygame.mouse.get_pos() 
