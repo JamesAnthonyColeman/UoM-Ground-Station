@@ -17,8 +17,8 @@ import datetime
 
 # Begin script
 pygame.init()
-Launch_time = datetime.datetime.now() # Date for starting the scrip. Used for data collection
 Launch_in_seconds=time.time()
+fname = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S.csv')
 
 # Establishing a connection
 vehicle = connect('com7', wait_ready=True, baud=9600)
@@ -55,8 +55,11 @@ while run:
     horizon = artificial_horizon.Horizon(103,0)
     altimeter_dial = altimeter.Altitude(402, 0, data_altitude)
     compass_dial = compass.Compass(103, 300, 1, data)
-    Graph = grapher.Graph(403, 300, 3, 3, data, data_altitude, Launch_time, Launch_in_seconds)
-    
+    Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+    sample_data = pd.read_csv(fname)
+    X = sample_data.iloc[:,0]
+    Y = sample_data.iloc[:,1]
+    Z = sample_data.iloc[:,2]
 
     
     # Used for locating things on the page
@@ -66,7 +69,8 @@ while run:
     # Draw dials
     
     compass_dial.draw(screen)
-    Graph.draw(screen)
+    Graph.draw(screen,403, 300,X,Y)
+    Graph.draw(screen,703, 300,X,Z)
     airspeed_dial.draw(screen)
     horizon.update(screen,10 , 10)
     altimeter_dial.draw(screen)
