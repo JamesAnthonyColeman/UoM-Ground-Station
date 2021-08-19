@@ -12,32 +12,31 @@ import time
 
 class Graph():
     # Constructor
-    def __init__(self, x, y, width, height, Data, Data2, Date, Seconds):
-        self.x = x
-        self.y = y
+    def __init__(self, width, height, Data, Data2, Seconds, Title):
         self.width = width
         self.height = height
         self.data1 = Data
         self.data2=Data2
-        self.date = Date
         self.seconds=Seconds
-        self.title = str(Date.strftime("%Y-%m-%d-%H-%M-%S")) + ".csv"
-        ExactTime = time.time
+        self.title = Title
+        ExactTime = time.time()
         Running_time =int(ExactTime) - int(Seconds)
 
         # Setting data as a csv file for current
         with open( self.title, 'a', newline='') as f:
             thewriter = csv.writer(f)
             thewriter.writerow([Running_time , self.data1, self.data2])
+            f.close()
 
 
-    def draw(self, screen):
-        sample_data = pd.read_csv(self.title)
-        X = sample_data.iloc[:,0]
-        Y = sample_data.iloc[:,1]
+    def draw(self, screen, x, y, rowx, rowy):
+        self.x=x
+        self.y=y
+        self.rowx=rowx
+        self.rowy=rowy
         fig = pylab.figure(figsize=[self.width, self.height], dpi=100) # 100 dots per inch, so the resulting buffer is 400x400 pixels
         ax = fig.gca()
-        ax.plot(X,Y)
+        ax.plot(rowx,rowy)
         canvas = agg.FigureCanvasAgg(fig)
         canvas.draw()
         renderer = canvas.get_renderer()
