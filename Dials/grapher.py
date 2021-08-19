@@ -8,10 +8,11 @@ import pandas as pd
 matplotlib.use("Agg")
 import matplotlib.backends.backend_agg as agg
 import pylab
+import time
 
 class Graph():
     # Constructor
-    def __init__(self, x, y, width, height, Data, Data2, Date):
+    def __init__(self, x, y, width, height, Data, Data2, Date, Seconds):
         self.x = x
         self.y = y
         self.width = width
@@ -19,9 +20,10 @@ class Graph():
         self.data1 = Data
         self.data2=Data2
         self.date = Date
+        self.seconds=Seconds
         self.title = str(Date.strftime("%Y-%m-%d-%H-%M-%S")) + ".csv"
-        ExactTime = datetime.datetime.now()
-        Running_time =int(ExactTime.strftime("%S")) - int(Date.strftime("%S"))
+        ExactTime = time.time
+        Running_time =int(ExactTime) - int(Seconds)
 
         # Setting data as a csv file for current
         with open( self.title, 'a', newline='') as f:
