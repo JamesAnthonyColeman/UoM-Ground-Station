@@ -18,6 +18,7 @@ import datetime
 # Begin script
 pygame.init()
 Launch_time = datetime.datetime.now() # Date for starting the scrip. Used for data collection
+Launch_in_seconds=time.time()
 
 # Establishing a connection
 vehicle = connect('com7', wait_ready=True, baud=9600)
@@ -54,7 +55,7 @@ while run:
     horizon = artificial_horizon.Horizon(103,0)
     altimeter_dial = altimeter.Altitude(402, 0, data_altitude)
     compass_dial = compass.Compass(103, 300, 1, data)
-    Graph = grapher.Graph(403, 300, 3, 3, data, data_altitude, Launch_time)
+    Graph = grapher.Graph(403, 300, 3, 3, data, data_altitude, Launch_time, Launch_in_seconds)
     
 
     
