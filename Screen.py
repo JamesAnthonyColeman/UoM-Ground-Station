@@ -20,8 +20,8 @@ pygame.init()
 Launch_time = datetime.datetime.now() # Date for starting the scrip. Used for data collection
 
 # Establishing a connection
-vehicle = connect('com7', wait_ready=True, baud=9600)
-print("Connecting to vehicle")
+#vehicle = connect('com7', wait_ready=True, baud=9600)
+#print("Connecting to vehicle")
 
 # Variables
 WIDTH, HEIGHT = 900, 600
@@ -36,13 +36,49 @@ pygame.display.set_caption("Ground control")
 bg = pygame.image.load('Assets/grey.png').convert_alpha()
 bg = pygame.transform.scale(bg, (int(WIDTH), int(HEIGHT)))
 
+# Screen setup variables
+clock.tick(FPS)
+screen.blit(bg, (0,0))
+click = False
 
+# Front screen
+# Handles open up sequence and leads to a menu
+def Front():
+    run = True
+    while run:
+        screen.fill((0,0,0))
+        mx, my = pygame.mouse.get_pos()
 
+        button_1 = pygame.Rect(50, 100, 200, 50)
+        button_2 = pygame.Rect(50, 200, 200, 50)
+        if button_1.collidepoint((mx, my)):
+            if click:
+                Main()
+        if button_2.collidepoint((mx, my)):
+            if click:
+                FlightData()
+        pygame.draw.rect(screen, (255, 0, 0), button_1)
+        pygame.draw.rect(screen, (255, 0, 0), button_2)
 
+        click = False
+        #event handler
+        for event in pygame.event.get() :
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+            else:
+                pygame.display.update()
 
 # Main screen
-#Should be of the dials that we have done as far and maby some more info/dials
 def Main():
+    # Establishing a connection
+    """ this will be handled differently but for now this will do"""
+    vehicle = connect('com7', wait_ready=True, baud=9600)
+    print("Connecting to vehicle")
+
     run = True
     while run:
         # Get vehicle attributes
@@ -70,31 +106,37 @@ def Main():
         
         #event handler
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    run = False
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
             else:
                 pygame.display.update()
 
+# data analysis screen
+def FlightData():
+    running = True
+    while running:
+        screen.fill((0,155,0))
+        #event handler
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+            else:
+                pygame.display.update()
+        
 
 
 
 
 
-
-# Program loop
-run = True
-while run:
-    clock.tick(FPS)
-    screen.blit(bg, (0,0))
-
-    Main()
-
-    #event handler
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-    pygame.display.update()
+Front()
 
 vehicle.close()
 pygame.quit()
