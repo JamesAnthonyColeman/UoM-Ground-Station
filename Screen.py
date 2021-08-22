@@ -72,7 +72,7 @@ while run:
     Graph.draw(screen,403, 300,X,Y)
     Graph.draw(screen,703, 300,X,Z)
     airspeed_dial.draw(screen)
-    horizon.update(screen,10 , 10)
+    horizon.update(screen,math.degrees(vehicle.attitude.roll) , math.degrees(vehicle.attitude.pitch))
     altimeter_dial.draw(screen)
 
     #event handler
