@@ -35,10 +35,12 @@ pygame.display.set_caption("Ground control")
 # Define images for background and size
 bg = pygame.image.load('Assets/grey.png').convert_alpha()
 bg = pygame.transform.scale(bg, (int(WIDTH), int(HEIGHT)))
+frontpic = pygame.image.load('Assets/CS_15.jpg').convert_alpha()
+#frontpic = pygame.transform.scale(frontpic, (int(WIDTH), int(HEIGHT)))
 
 # Screen setup variables
 clock.tick(FPS)
-screen.blit(bg, (0,0))
+screen.fill((0,0,0))
 click = False
 
 # Front screen
@@ -46,11 +48,11 @@ click = False
 def Front():
     run = True
     while run:
-        screen.fill((0,0,0))
+        screen.blit(frontpic, (0,0))
         mx, my = pygame.mouse.get_pos()
 
-        button_1 = pygame.Rect(50, 100, 200, 50)
-        button_2 = pygame.Rect(50, 200, 200, 50)
+        button_1 = pygame.Rect(50, 200, 200, 50)
+        button_2 = pygame.Rect(50, 300, 200, 50)
         if button_1.collidepoint((mx, my)):
             if click:
                 Main()
@@ -76,6 +78,7 @@ def Front():
 def Main():
     # Establishing a connection
     """ this will be handled differently but for now this will do"""
+    """ yeah this implementation is buggy as hell lmao"""
     vehicle = connect('com7', wait_ready=True, baud=9600)
     print("Connecting to vehicle")
 
@@ -84,6 +87,8 @@ def Main():
         # Get vehicle attributes
         # For now the attribute will be pitch in degrees
         data = math.degrees(vehicle.attitude.pitch)
+        
+        screen.blit((bg), (0,0))
 
         # Dials defined
         airspeed_dial = airspeed_indicator.Airspeed( 0, 0, 1, data, 0.4, -5, 0.185,0.125)
@@ -109,6 +114,7 @@ def Main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     run = False
+                    vehicle.close()
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
@@ -140,15 +146,3 @@ Front()
 
 vehicle.close()
 pygame.quit()
-
-# Different windows are written as functions here
-
-# Front screen
-#Should include window resize, connect to mavlink, connection to different screen. by Esc key
-
-
-
-
-#Graphing monitor page 1
-#Should have a few graphs at a time taking in data.data
-
