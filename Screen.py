@@ -34,14 +34,37 @@ bg = pygame.image.load('Assets/grey.png').convert_alpha()
 bg = pygame.transform.scale(bg, (int(WIDTH), int(HEIGHT)))
 frontpic = pygame.image.load('Assets/CS_15.jpg').convert_alpha()
 #frontpic = pygame.transform.scale(frontpic, (int(WIDTH), int(Height)))
+intro1 = pygame.image.load('Assets/UOM_White_bg.jpg').convert_alpha()
 
 # Screen setup veriables
 clock.tick(FPS)
 screen.fill((0, 0, 0))
 click = False
 
-# Front screen
+"""Intro"""
+"""This will have the 5-10 second intro and can be used to collect assets"""
+def Intro():
+    screen.fill((255, 255, 255))
+    screen.blit(intro1, (200, 200))
+    pygame.display.update()
+    pygame.time.delay(3000)
+    screen.fill((255, 255, 255))
+    font = pygame.font.SysFont('Futura', 40)
+    img = font.render('UoM UAV Ground Station', True, (0, 0, 0))
+    screen.blit(img, (200, 200))
+    img2 = font.render('Credits: James Coleman, Ildem Baymaz, Jazib Imran', True, (0, 0, 0))
+    screen.blit(img2, (100, 500))
+    pygame.display.update()
+    pygame.time.delay(3000)
+    Front()
+
+
+
+
+""" Front screen"""
+""" This screen should have links to all screens and handle the connection"""
 def Front():
+    screen.fill((0, 0, 0))
     run = True
     while run:
         screen.blit(frontpic, (0, 0))
@@ -70,7 +93,11 @@ def Front():
             else:
                 pygame.display.update()
 
-# Main screen
+
+
+
+""" Main screen"""
+"""This screen will have all the main dials on"""
 def Main():
     # Establishing a connection
     vehicle = connect('com7', wait_ready=True, baud=9600)
@@ -123,7 +150,11 @@ def Main():
             else:
                 pygame.display.update()
 
-# Data analysis screen
+
+
+
+""" Data analysis screen"""
+""" This screen will have a bunch of graphs on"""
 def FlightData():
     running = True
     while running:
@@ -141,7 +172,7 @@ def FlightData():
 
 # This is where the loop starts and then when the loop ends it closes.
 
-Front()
+Intro()
 
 vehicle.close()
 pygame.quit()
