@@ -20,10 +20,6 @@ pygame.init()
 Launch_in_seconds=time.time()
 fname = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S.csv')
 
-# Establishing a connection
-vehicle = connect('com7', wait_ready=True, baud=9600)
-print("Connecting to vehicle")
-
 # Variables
 WIDTH, HEIGHT = 1003, 600
 FPS = 60
@@ -36,50 +32,116 @@ pygame.display.set_caption("Ground control")
 # Define images for background and size
 bg = pygame.image.load('Assets/grey.png').convert_alpha()
 bg = pygame.transform.scale(bg, (int(WIDTH), int(HEIGHT)))
+frontpic = pygame.image.load('Assets/CS_15.jpg').convert_alpha()
+#frontpic = pygame.transform.scale(frontpic, (int(WIDTH), int(Height)))
 
+# Screen setup veriables
+clock.tick(FPS)
+screen.fill((0, 0, 0))
+click = False
 
-# Program loop
-run = True
-while run:
-    clock.tick(FPS)
-    screen.blit(bg, (0,0))
+# Front screen
+def Front():
+    run = True
+    while run:
+        screen.blit(frontpic, (0, 0))
+        mx, my = pygame.mouse.get_pos()
 
-    # Get vehicle attributes
-    # For now the attribute will be pitch in degrees
-    data = math.degrees(vehicle.attitude.pitch)
-    data_altitude=vehicle.location.global_frame.alt
+        button_1 = pygame.Rect(50, 200, 200, 50)
+        button_2 = pygame.Rect(50, 300, 200, 50)
+        if button_1.collidepoint((mx, my)):
+            if click:
+                Main()
+        if button_2.collidepoint((mx, my)):
+            if click:
+                FlightData()
+        pygame.draw.rect(screen, (255, 0, 0), button_1)
+        pygame.draw.rect(screen, (255, 0, 0), button_2)
 
+        click = False
+        #event handler
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+            else:
+                pygame.display.update()
 
-    # Dials defined
-    airspeed_dial = airspeed_indicator.Airspeed( 0, 0, 1, data, 0.4, -5, 0.185,0.125)
-    horizon = artificial_horizon.Horizon(103,0)
-    altimeter_dial = altimeter.Altitude(402, 0, data_altitude)
-    compass_dial = compass.Compass(103, 300, 1, data)
-    Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
-    sample_data = pd.read_csv(fname)
-    X = sample_data.iloc[:,0]
-    Y = sample_data.iloc[:,1]
-    Z = sample_data.iloc[:,2]
-
+# Main screen
+def Main():
+    # Establishing a connection
+    vehicle = connect('com7', wait_ready=True, baud=9600)
+    print("Connecting to vehicle")
     
-    # Used for locating things on the page
-    #pos = pygame.mouse.get_pos() 
-    #print(pos)
+    run = True
+    while run:
+        screen.blit(bg, (0,0))
 
-    # Draw dials
-    
-    compass_dial.draw(screen)
-    Graph.draw(screen,403, 300,X,Y)
-    Graph.draw(screen,703, 300,X,Z)
-    airspeed_dial.draw(screen)
-    horizon.update(screen,math.degrees(vehicle.attitude.roll) , math.degrees(vehicle.attitude.pitch))
-    altimeter_dial.draw(screen)
+        # Get vehicle attributes
+        # For now the attribute will be pitch in degrees
+        data = math.degrees(vehicle.attitude.pitch)
+        data_altitude=vehicle.location.global_frame.alt
 
-    #event handler
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-    pygame.display.update()
+
+        # Dials defined
+        airspeed_dial = airspeed_indicator.Airspeed( 0, 0, 1, data, 0.4, -5, 0.185,0.125)
+        horizon = artificial_horizon.Horizon(103,0)
+        altimeter_dial = altimeter.Altitude(402, 0, data_altitude)
+        compass_dial = compass.Compass(103, 300, 1, data)
+        Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+        sample_data = pd.read_csv(fname)
+        X = sample_data.iloc[:,0]
+        Y = sample_data.iloc[:,1]
+        Z = sample_data.iloc[:,2]
+
+        
+        # Used for locating things on the page
+        #pos = pygame.mouse.get_pos() 
+        #print(pos)
+
+        # Draw dials
+        
+        compass_dial.draw(screen)
+        Graph.draw(screen,403, 300,X,Y)
+        Graph.draw(screen,703, 300,X,Z)
+        airspeed_dial.draw(screen)
+        horizon.update(screen,math.degrees(vehicle.attitude.roll) , math.degrees(vehicle.attitude.pitch))
+        altimeter_dial.draw(screen)
+
+        #event handler
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+                    vehicle.close()
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+            else:
+                pygame.display.update()
+
+# Data analysis screen
+def FlightData():
+    running = True
+    while running:
+        screen.fill((0, 155, 0))
+        #event handler
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+            else:
+                pygame.display.update()
+
+# This is where the loop starts and then when the loop ends it closes.
+
+Front()
 
 vehicle.close()
 pygame.quit()
