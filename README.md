@@ -1,5 +1,7 @@
 # UoM-Ground-Station
 
+Update: The work on this branch has been complete
+
 This is the work of:   
 **James Coleman**   
 **Ildem Baymaz**   
