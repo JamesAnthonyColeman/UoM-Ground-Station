@@ -41,6 +41,9 @@ clock.tick(FPS)
 screen.fill((0, 0, 0))
 click = False
 
+
+
+
 """Intro"""
 """This will have the 5-10 second intro and can be used to collect assets"""
 def Intro():
@@ -72,14 +75,40 @@ def Front():
 
         button_1 = pygame.Rect(50, 200, 200, 50)
         button_2 = pygame.Rect(50, 300, 200, 50)
+        button_3 = pygame.Rect(50, 400, 200, 50)
+        button_4 = pygame.Rect(400, 300, 200, 50)
+        button_5 = pygame.Rect(400, 400, 200, 50)
         if button_1.collidepoint((mx, my)):
             if click:
                 Main()
         if button_2.collidepoint((mx, my)):
             if click:
-                FlightData()
+                Grapher()
+        if button_3.collidepoint((mx, my)):
+            if click:
+                Data()
+        if button_4.collidepoint((mx, my)):
+            if click:
+                Cameras()
+        if button_5.collidepoint((mx, my)):
+            if click:
+                Options()
+        font = pygame.font.SysFont('Futura', 30)
+        img1 = font.render('Main', True, (0, 0, 0))
+        img2 = font.render('Grapher', True, (0, 0, 0))
+        img3 = font.render('Data', True, (0, 0, 0))
+        img4 = font.render('Camera', True, (0, 0, 0))
+        img5 = font.render('Options', True, (0, 0, 0))        
         pygame.draw.rect(screen, (255, 0, 0), button_1)
+        screen.blit(img1, (50, 200))
         pygame.draw.rect(screen, (255, 0, 0), button_2)
+        screen.blit(img2, (50, 300))
+        pygame.draw.rect(screen, (255, 0, 0), button_3)
+        screen.blit(img3, (50, 400))
+        pygame.draw.rect(screen, (255, 0, 0), button_4)
+        screen.blit(img4, (400, 300))
+        pygame.draw.rect(screen, (255, 0, 0), button_5)
+        screen.blit(img5, (400, 400))
 
         click = False
         #event handler
@@ -153,9 +182,9 @@ def Main():
 
 
 
-""" Data analysis screen"""
+""" Graph analysis screen"""
 """ This screen will have a bunch of graphs on"""
-def FlightData():
+def Grapher():
     running = True
     while running:
         screen.fill((0, 155, 0))
@@ -169,6 +198,68 @@ def FlightData():
                 pygame.quit()
             else:
                 pygame.display.update()
+
+
+
+
+""" Data screen"""
+""" This screen will have the incomming data packets and information about actuators and more"""
+def Data():
+    running = True
+    while running:
+        screen.fill((155, 155, 0))
+        #event handler
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+            else:
+                pygame.display.update()
+
+
+
+
+""" Cameras screen"""
+""" This screen will handle camera feeds"""
+def Cameras():
+    running = True
+    while running:
+        screen.fill((0, 155, 155))
+        #event handler
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+            else:
+                pygame.display.update()
+
+
+
+
+""" Options screen"""
+""" This screen will have a bunch of Options on"""
+def Options():
+    running = True
+    while running:
+        screen.fill((155, 155, 155))
+        #event handler
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+            else:
+                pygame.display.update()
+
+
 
 # This is where the loop starts and then when the loop ends it closes.
 
