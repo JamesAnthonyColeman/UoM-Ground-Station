@@ -48,15 +48,23 @@ click = False
 """This will have the 5-10 second intro and can be used to collect assets"""
 def Intro():
     screen.fill((255, 255, 255))
-    screen.blit(intro1, (230, 200))
+    screen.blit(intro1, (230, 180))
     pygame.display.update()
     pygame.time.delay(3000)
     screen.fill((255, 255, 255))
-    font = pygame.font.SysFont('Futura', 40)
-    img = font.render('UoM UAV Ground Station', True, (0, 0, 0))
-    screen.blit(img, (200, 200))
-    img2 = font.render('Credits: James Coleman, Ildem Baymaz, Jazib Imran', True, (0, 0, 0))
-    screen.blit(img2, (100, 500))
+
+    font = pygame.font.SysFont('Futura', 100)
+    img = font.render('UAV', True, (0, 0, 0))
+    screen.blit(img, (225, 200))
+
+    font2 = pygame.font.SysFont('Futura', 60)
+    img2 = font2.render('Ground Station', True, (0, 0, 0))
+    screen.blit(img2, (225, 300))
+
+    font3 = pygame.font.SysFont('Futura', 30)
+    img3 = font3.render('Credits: James Coleman, Ildem Baymaz, Jazib Imran', True, (0, 0, 0))
+    screen.blit(img3, (225, 550))
+
     pygame.display.update()
     pygame.time.delay(3000)
     Front()
