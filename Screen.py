@@ -48,7 +48,7 @@ click = False
 """This will have the 5-10 second intro and can be used to collect assets"""
 def Intro():
     screen.fill((255, 255, 255))
-    screen.blit(intro1, (200, 200))
+    screen.blit(intro1, (230, 200))
     pygame.display.update()
     pygame.time.delay(3000)
     screen.fill((255, 255, 255))
