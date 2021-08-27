@@ -76,16 +76,17 @@ def Intro():
 """ This screen should have links to all screens and handle the connection"""
 def Front():
     screen.fill((0, 0, 0))
+    Connected = False
     run = True
     while run:
         screen.blit(frontpic, (0, 0))
         mx, my = pygame.mouse.get_pos()
 
-        button_1 = pygame.Rect(50, 200, 200, 50)
-        button_2 = pygame.Rect(50, 300, 200, 50)
-        button_3 = pygame.Rect(50, 400, 200, 50)
-        button_4 = pygame.Rect(400, 300, 200, 50)
-        button_5 = pygame.Rect(400, 400, 200, 50)
+        button_1 = pygame.Rect(50, 200, 200, 50) # Main
+        button_2 = pygame.Rect(50, 300, 200, 50) # Grapher
+        button_3 = pygame.Rect(50, 400, 200, 50) # Data
+        button_4 = pygame.Rect(400, 300, 200, 50) # Cameras
+        button_5 = pygame.Rect(400, 400, 200, 50) # Options
         if button_1.collidepoint((mx, my)):
             if click:
                 Main()
@@ -118,6 +119,31 @@ def Front():
         pygame.draw.rect(screen, (255, 0, 0), button_5)
         screen.blit(img5, (400, 400))
 
+        #Connect button
+        if Connected == False:
+            button_6 = pygame.Rect(750, 300, 200, 50) # Connect button
+            if button_6.collidepoint((mx, my)):
+                if click:
+                    Connected = True
+                    # Establishing a connection
+                    global vehicle 
+                    vehicle = connect('com7', wait_ready=True, baud=9600)
+                    print("Connecting to vehicle")
+            pygame.draw.rect(screen, (255, 0, 0), button_6)
+            img6 = font.render('Connect', True, (0, 0, 0))
+            screen.blit(img6, (750, 300))
+        else:
+            button_6 = pygame.Rect(750, 300, 200, 50) # Connect button
+            if button_6.collidepoint((mx, my)):
+                if click:
+                    Connected = False
+                    vehicle.close()
+            pygame.draw.rect(screen, (255, 0, 0), button_6)
+            img6 = font.render('Connected', True, (0, 0, 0))
+            screen.blit(img6, (750, 300))
+
+
+        pygame.display.update()
         click = False
         #event handler
         for event in pygame.event.get():
@@ -127,8 +153,7 @@ def Front():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
-            else:
-                pygame.display.update()
+
 
 
 
@@ -136,10 +161,7 @@ def Front():
 """ Main screen"""
 """This screen will have all the main dials on"""
 def Main():
-    # Establishing a connection
-    vehicle = connect('com7', wait_ready=True, baud=9600)
-    print("Connecting to vehicle")
-    
+
     run = True
     while run:
         screen.blit(bg, (0,0))
@@ -175,6 +197,8 @@ def Main():
         horizon.update(screen,math.degrees(vehicle.attitude.roll) , math.degrees(vehicle.attitude.pitch))
         altimeter_dial.draw(screen)
 
+        pygame.display.update()
+
         #event handler
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -184,8 +208,6 @@ def Main():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
-            else:
-                pygame.display.update()
 
 
 
@@ -196,6 +218,7 @@ def Grapher():
     running = True
     while running:
         screen.fill((0, 155, 0))
+        pygame.display.update()
         #event handler
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -204,8 +227,7 @@ def Grapher():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
-            else:
-                pygame.display.update()
+
 
 
 
@@ -216,6 +238,7 @@ def Data():
     running = True
     while running:
         screen.fill((155, 155, 0))
+        pygame.display.update()
         #event handler
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -224,8 +247,7 @@ def Data():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
-            else:
-                pygame.display.update()
+
 
 
 
@@ -236,6 +258,7 @@ def Cameras():
     running = True
     while running:
         screen.fill((0, 155, 155))
+        pygame.display.update()
         #event handler
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -244,8 +267,7 @@ def Cameras():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
-            else:
-                pygame.display.update()
+
 
 
 
@@ -256,6 +278,7 @@ def Options():
     running = True
     while running:
         screen.fill((155, 155, 155))
+        pygame.display.update()
         #event handler
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -264,8 +287,7 @@ def Options():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
-            else:
-                pygame.display.update()
+
 
 
 
