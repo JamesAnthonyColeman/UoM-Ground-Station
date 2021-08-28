@@ -52,17 +52,18 @@ def angle(unit, total):
 class Altitude():
     def __init__(self, x, y, Data):
         noscale1 = pygame.image.load('Assets/RF_Dial_Background.png')
-        Dial= pygame.transform.scale(noscale1, (Width//3, Height//6))
+        Dial= pygame.transform.scale(noscale1, (Width//3, Height//6)) #.convert_alpha() This will make the yellow go
         noscale2=pygame.image.load('Assets/Indicator_Background.png')
         Indicator = pygame.transform.scale(noscale2, (Width, Height)).convert_alpha()
         Indicator.set_colorkey(0xFFFF00)
+        Dial.set_colorkey(0xFFFF00)
         black = (0, 0, 0)
         writing_font = pygame.font.SysFont('Calibri', 20, True, False)
         self.data = Data
         self.font = writing_font
         self.colour = black
         self.image1 = Indicator
-        self.image2=Dial
+        self.image2 = Dial
         self.rect = self.image1.get_rect()
         self.rect.x = x
         self.rect.y = y

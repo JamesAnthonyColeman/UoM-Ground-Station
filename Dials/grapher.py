@@ -22,11 +22,14 @@ class Graph():
         ExactTime = time.time()
         Running_time =int(ExactTime) - int(Seconds)
 
-        # Setting data as a csv file for current
-        with open( self.title, 'a', newline='') as f:
-            thewriter = csv.writer(f)
-            thewriter.writerow([Running_time , self.data1, self.data2])
-            f.close()
+        if self.title == 900: # 900 is a random numerical name for this condition
+            pass
+        else:
+            # Setting data as a csv file for current
+            with open( self.title, 'a', newline='') as f:
+                thewriter = csv.writer(f)
+                thewriter.writerow([Running_time , self.data1, self.data2])
+                f.close()
 
 
     def draw(self, screen, x, y, rowx, rowy):

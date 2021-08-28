@@ -17,8 +17,6 @@ import datetime
 
 # Begin script
 pygame.init()
-Launch_in_seconds=time.time()
-fname = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S.csv')
 
 # Variables
 WIDTH, HEIGHT = 1280, 720 #1003, 600 # 1280, 720
@@ -50,25 +48,21 @@ click = False
 """This will have the 5-10 second intro and can be used to collect assets"""
 def Intro():
     screen.fill((255, 255, 255))
-    screen.blit(intro1, (230, 180))
+    screen.blit(intro1, (360, 220))
     pygame.display.update()
     pygame.time.delay(3000)
     screen.fill((255, 255, 255))
 
-    font = pygame.font.SysFont('Futura', 100)
+    font = pygame.font.SysFont('Futura', 200)
     img = font.render('UAV', True, (0, 0, 0))
     screen.blit(img, (225, 200))
 
-    font2 = pygame.font.SysFont('Futura', 60)
+    font2 = pygame.font.SysFont('Futura', 120)
     img2 = font2.render('Ground Station', True, (0, 0, 0))
-    screen.blit(img2, (225, 300))
-
-    font3 = pygame.font.SysFont('Futura', 30)
-    img3 = font3.render('Credits: James Coleman, Ildem Baymaz, Jazib Imran', True, (0, 0, 0))
-    screen.blit(img3, (225, 550))
+    screen.blit(img2, (225, 350))
 
     pygame.display.update()
-    pygame.time.delay(3000)
+    pygame.time.delay(2000)
     Front()
 
 
@@ -78,6 +72,7 @@ def Intro():
 """ This screen should have links to all screens and handle the connection"""
 def Front():
     screen.fill((0, 0, 0))
+    global Connected
     Connected = False
     run = True
     while run:
@@ -144,6 +139,10 @@ def Front():
             pygame.draw.rect(screen, (255, 0, 0), button_6)
             img6 = font.render('Connect', True, (0, 0, 0))
             screen.blit(img6, (750, 300))
+            global Launch_in_seconds
+            Launch_in_seconds=time.time()
+            global fname
+            fname = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S.csv')
         else:
             button_6 = pygame.Rect(750, 300, 200, 50) # Connect button
             if button_6.collidepoint((mx, my)):
@@ -179,12 +178,26 @@ def Main():
 
     run = True
     while run:
-        screen.blit(bg, (0,0))
+        screen.fill((170, 170, 170))
 
         # Get vehicle attributes
-        # For now the attribute will be pitch in degrees
-        data = math.degrees(vehicle.attitude.pitch)
-        data_altitude=vehicle.location.global_frame.alt
+        if Connected == True:
+            data = math.degrees(vehicle.attitude.pitch)
+            data2 = math.degrees(vehicle.attitude.roll)
+            data_altitude=vehicle.location.global_frame.alt
+            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+            sample_data = pd.read_csv(fname)
+            X = sample_data.iloc[:,0]
+            Y = sample_data.iloc[:,1]
+            Z = sample_data.iloc[:,2]
+        else:
+            data = 0
+            data2 = 0
+            data_altitude = 0
+            X = 0
+            Y = 0
+            Z = 0
+            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
 
 
         # Dials defined
@@ -192,12 +205,6 @@ def Main():
         horizon = artificial_horizon.Horizon(103,0)
         altimeter_dial = altimeter.Altitude(402, 0, data_altitude)
         compass_dial = compass.Compass(103, 300, 1, data)
-        Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
-        sample_data = pd.read_csv(fname)
-        X = sample_data.iloc[:,0]
-        Y = sample_data.iloc[:,1]
-        Z = sample_data.iloc[:,2]
-
         
         # Used for locating things on the page
         #pos = pygame.mouse.get_pos() 
@@ -209,7 +216,7 @@ def Main():
         Graph.draw(screen,403, 300,X,Y)
         Graph.draw(screen,703, 300,X,Z)
         airspeed_dial.draw(screen)
-        horizon.update(screen,math.degrees(vehicle.attitude.roll) , math.degrees(vehicle.attitude.pitch))
+        horizon.update(screen, data2, data)
         altimeter_dial.draw(screen)
 
         pygame.display.update()
@@ -251,7 +258,7 @@ def Grapher():
 def Data():
     running = True
     while running:
-        screen.fill((155, 155, 0))
+        screen.fill((170, 170, 170))
         pygame.display.update()
         #event handler
         for event in pygame.event.get():
@@ -271,7 +278,40 @@ def Data():
 def Cameras():
     running = True
     while running:
-        screen.fill((0, 155, 155))
+        screen.fill((170, 170, 170))
+
+        border = pygame.Rect(4, 199, 632, 482)
+        pygame.draw.rect(screen, (0, 0, 0), border)
+        border = pygame.Rect(639, 199, 632, 482)
+        pygame.draw.rect(screen, (0, 0, 0), border)
+        border = pygame.Rect(39, 99, 1202, 82)
+        pygame.draw.rect(screen, (0, 0, 0), border)
+
+        fpvfeed = pygame.Rect(5, 200, 630, 480)
+        pygame.draw.rect(screen, (200, 200, 200), fpvfeed)
+        wififeed = pygame.Rect(640, 200, 630, 480)
+        pygame.draw.rect(screen, (200, 200, 200), wififeed)
+        toolbox = pygame.Rect(40, 100, 1200, 80)
+        pygame.draw.rect(screen, (200, 200, 200), toolbox)
+
+        font = pygame.font.SysFont('Futura', 50)
+        anafeed = font.render('5.8 GHz', True, (0, 0, 0))
+        screen.blit(anafeed, (50, 300))
+        anafeed = font.render('Analogue camera feed', True, (0, 0, 0))
+        screen.blit(anafeed, (50, 350))
+        font = pygame.font.SysFont('Arial', 20)
+        anafeed = font.render('Connection not established', True, (0, 0, 0))
+        screen.blit(anafeed, (50, 400))
+
+        font = pygame.font.SysFont('Futura', 50)
+        anafeed = font.render('2.4 GHz', True, (0, 0, 0))
+        screen.blit(anafeed, (690, 300))
+        anafeed = font.render('Digital camera feed', True, (0, 0, 0))
+        screen.blit(anafeed, (690, 350))
+        font = pygame.font.SysFont('Arial', 20)
+        anafeed = font.render('Connection not established', True, (0, 0, 0))
+        screen.blit(anafeed, (690, 400))
+
         pygame.display.update()
         #event handler
         for event in pygame.event.get():
@@ -291,7 +331,63 @@ def Cameras():
 def Options():
     running = True
     while running:
-        screen.fill((155, 155, 155))
+        screen.fill((170, 170, 170))
+
+        border = pygame.Rect(39, 99, 592, 602)
+        pygame.draw.rect(screen, (0, 0, 0), border)
+        border = pygame.Rect(639, 99, 602, 302)
+        pygame.draw.rect(screen, (0, 0, 0), border)
+
+        resbox = pygame.Rect(40, 100, 590, 600)
+        pygame.draw.rect(screen, (200, 200, 200), resbox)
+        creditbox = pygame.Rect(640, 100, 600, 300)
+        pygame.draw.rect(screen, (200, 200, 200), creditbox)
+
+        LogoWidth = logo.get_width()
+        LogoHeight = logo.get_height()
+        Logoscale = 0.5
+        Logo = pygame.transform.scale(logo, (int(LogoWidth * Logoscale), int(LogoHeight * Logoscale))) # Logo
+        screen.blit(Logo, (800, 500))
+
+        font = pygame.font.SysFont('Futura', 50)
+        Resolutiontext = font.render('Resolution: 1280 x 720', True, (0, 0, 0))
+        screen.blit(Resolutiontext, (60, 120))
+        credittext = font.render('Credits', True, (0, 0, 0))
+        screen.blit(credittext, (660, 120))
+        connectiontext = font.render('Connection settings', True, (0, 0, 0))
+        screen.blit(connectiontext, (60, 370))
+
+        font = pygame.font.SysFont('Arial', 20)
+        nametext = font.render('James Coleman', True, (0, 0, 0))
+        screen.blit(nametext, (660, 170))
+        nametext = font.render('Ildem Baymaz', True, (0, 0, 0))
+        screen.blit(nametext, (660, 190))
+        nametext = font.render('Jazib Imran', True, (0, 0, 0))
+        screen.blit(nametext, (660, 210))
+        nametext = font.render('Open source Software produced for the University of Manchester 2021', True, (0, 0, 0))
+        screen.blit(nametext, (660, 250))
+        nametext = font.render('Summer Internship Program. ', True, (0, 0, 0))
+        screen.blit(nametext, (660, 270))
+
+        restext = font.render('1024 x 576', True, (0, 0, 0))
+        screen.blit(restext, (60, 170))
+        restext = font.render('1152 x 648', True, (0, 0, 0))
+        screen.blit(restext, (60, 200))
+        restext = font.render('1280 x 720', True, (0, 0, 0))
+        screen.blit(restext, (60, 230))
+        restext = font.render('1366 x 768', True, (0, 0, 0))
+        screen.blit(restext, (60, 260))
+        restext = font.render('1600 x 900', True, (0, 0, 0))
+        screen.blit(restext, (60, 290))
+        restext = font.render('1920 x 1080', True, (0, 0, 0))
+        screen.blit(restext, (60, 320))
+
+        comtext = font.render('Com port: 7', True, (0, 0, 0))
+        screen.blit(comtext, (60, 410))
+        comtext = font.render('Baud: 9600', True, (0, 0, 0))
+        screen.blit(comtext, (60, 440))
+
+
         pygame.display.update()
         #event handler
         for event in pygame.event.get():
