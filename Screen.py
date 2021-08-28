@@ -21,7 +21,7 @@ Launch_in_seconds=time.time()
 fname = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S.csv')
 
 # Variables
-WIDTH, HEIGHT = 1003, 600
+WIDTH, HEIGHT = 1280, 720 #1003, 600 # 1280, 720
 FPS = 60
 clock = pygame.time.Clock()
 
@@ -35,6 +35,8 @@ bg = pygame.transform.scale(bg, (int(WIDTH), int(HEIGHT)))
 frontpic = pygame.image.load('Assets/CS_15.jpg').convert_alpha()
 #frontpic = pygame.transform.scale(frontpic, (int(WIDTH), int(Height)))
 intro1 = pygame.image.load('Assets/UOM_White_bg.jpg').convert_alpha()
+logo = pygame.image.load('Assets/TAB_col_background.png').convert_alpha()
+
 
 # Screen setup veriables
 clock.tick(FPS)
@@ -81,6 +83,16 @@ def Front():
     while run:
         screen.blit(frontpic, (0, 0))
         mx, my = pygame.mouse.get_pos()
+
+        # Tool bar
+        ToolBackground = pygame.Rect(0, 0, 1280, 80) # Background
+        pygame.draw.rect(screen, (255, 0, 0), ToolBackground)
+        LogoWidth = logo.get_width()
+        LogoHeight = logo.get_height()
+        Logoscale = 0.34 #0.27
+        Logo = pygame.transform.scale(logo, (int(LogoWidth * Logoscale), int(LogoHeight * Logoscale))) # Logo
+        screen.blit(Logo, (0, 0))
+        # Ground station text
 
         button_1 = pygame.Rect(50, 200, 200, 50) # Main
         button_2 = pygame.Rect(50, 300, 200, 50) # Grapher
@@ -141,6 +153,9 @@ def Front():
             pygame.draw.rect(screen, (255, 0, 0), button_6)
             img6 = font.render('Connected', True, (0, 0, 0))
             screen.blit(img6, (750, 300))
+            data = math.degrees(vehicle.attitude.pitch)
+            data_altitude=vehicle.location.global_frame.alt
+            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
 
 
         pygame.display.update()
@@ -204,7 +219,6 @@ def Main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     run = False
-                    vehicle.close()
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
