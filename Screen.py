@@ -186,17 +186,10 @@ def Main():
             data2 = math.degrees(vehicle.attitude.roll)
             data_altitude=vehicle.location.global_frame.alt
             Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
-            sample_data = pd.read_csv(fname)
-            X = sample_data.iloc[:,0]
-            Y = sample_data.iloc[:,1]
-            Z = sample_data.iloc[:,2]
         else:
             data = 0
             data2 = 0
             data_altitude = 0
-            X = 0
-            Y = 0
-            Z = 0
             Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
 
 
@@ -213,8 +206,6 @@ def Main():
         # Draw dials
         
         compass_dial.draw(screen)
-        Graph.draw(screen,403, 300,X,Y)
-        Graph.draw(screen,703, 300,X,Z)
         airspeed_dial.draw(screen)
         horizon.update(screen, data2, data)
         altimeter_dial.draw(screen)
@@ -239,6 +230,28 @@ def Grapher():
     running = True
     while running:
         screen.fill((0, 155, 0))
+       if Connected == True:
+            data = math.degrees(vehicle.attitude.pitch)
+            data2 = math.degrees(vehicle.attitude.roll)
+            data_altitude=vehicle.location.global_frame.alt
+            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+            sample_data = pd.read_csv(fname)
+            X = sample_data.iloc[:,0]
+            Y = sample_data.iloc[:,1]
+            Z = sample_data.iloc[:,2]
+        else:
+            data = 0
+            data2 = 0
+            data_altitude = 0
+            X = 0
+            Y = 0
+            Z = 0
+            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
+        
+        Graph.draw(screen,403, 300,X,Y)
+        Graph.draw(screen,703, 300,X,Z)
+        
+        
         pygame.display.update()
         #event handler
         for event in pygame.event.get():
@@ -259,6 +272,17 @@ def Data():
     running = True
     while running:
         screen.fill((170, 170, 170))
+        if Connected == True:
+            data = math.degrees(vehicle.attitude.pitch)
+            data2 = math.degrees(vehicle.attitude.roll)
+            data_altitude=vehicle.location.global_frame.alt
+            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+        else:
+            data = 0
+            data2 = 0
+            data_altitude = 0
+            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
+        
         pygame.display.update()
         #event handler
         for event in pygame.event.get():
@@ -279,6 +303,16 @@ def Cameras():
     running = True
     while running:
         screen.fill((170, 170, 170))
+        if Connected == True:
+            data = math.degrees(vehicle.attitude.pitch)
+            data2 = math.degrees(vehicle.attitude.roll)
+            data_altitude=vehicle.location.global_frame.alt
+            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+        else:
+            data = 0
+            data2 = 0
+            data_altitude = 0
+            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
 
         border = pygame.Rect(4, 199, 632, 482)
         pygame.draw.rect(screen, (0, 0, 0), border)
@@ -332,7 +366,17 @@ def Options():
     running = True
     while running:
         screen.fill((170, 170, 170))
-
+        if Connected == True:
+            data = math.degrees(vehicle.attitude.pitch)
+            data2 = math.degrees(vehicle.attitude.roll)
+            data_altitude=vehicle.location.global_frame.alt
+            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+        else:
+            data = 0
+            data2 = 0
+            data_altitude = 0
+            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
+        
         border = pygame.Rect(39, 99, 592, 602)
         pygame.draw.rect(screen, (0, 0, 0), border)
         border = pygame.Rect(639, 99, 602, 302)
