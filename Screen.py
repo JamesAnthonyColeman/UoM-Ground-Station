@@ -164,7 +164,7 @@ def Connection():
             screen.blit(img6, (860, 0))
             data = math.degrees(vehicle.attitude.pitch)
             data_altitude=vehicle.location.global_frame.alt
-            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+            Graph = grapher.Graph(6, 4, data, data_altitude, Launch_in_seconds, fname)
 
 
 
@@ -182,12 +182,12 @@ def Main():
             data = math.degrees(vehicle.attitude.pitch)
             data2 = math.degrees(vehicle.attitude.roll)
             data_altitude=vehicle.location.global_frame.alt
-            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+            Graph = grapher.Graph(6, 4, data, data_altitude, Launch_in_seconds, fname)
         else:
             data = 0
             data2 = 0
             data_altitude = 0
-            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
+            Graph = grapher.Graph(6, 4, data, data_altitude, 0, 900)
 
 
         # Dials defined
@@ -237,7 +237,7 @@ def Grapher():
             data = math.degrees(vehicle.attitude.pitch)
             data2 = math.degrees(vehicle.attitude.roll)
             data_altitude=vehicle.location.global_frame.alt
-            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+            Graph = grapher.Graph(6, 4, data, data_altitude, Launch_in_seconds, fname)
             sample_data = pd.read_csv(fname)
             X = sample_data.iloc[:,0]
             Y = sample_data.iloc[:,1]
@@ -249,10 +249,10 @@ def Grapher():
             X = 0
             Y = 0
             Z = 0
-            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
+            Graph = grapher.Graph(6, 4, data, data_altitude, 0, 900)
         
-        Graph.draw(screen,403, 300,X,Y)
-        Graph.draw(screen,703, 300,X,Z)
+        Graph.draw(screen,0, 0,X,Y,'Pitch (degrees)')
+        Graph.draw(screen,602, 0,X,Z,'Altitude (m)')
         Front()
         
         #Connection()
@@ -285,12 +285,12 @@ def Data():
             data = math.degrees(vehicle.attitude.pitch)
             data2 = math.degrees(vehicle.attitude.roll)
             data_altitude=vehicle.location.global_frame.alt
-            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+            Graph = grapher.Graph(6, 4, data, data_altitude, Launch_in_seconds, fname)
         else:
             data = 0
             data2 = 0
             data_altitude = 0
-            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
+            Graph = grapher.Graph(6, 4, data, data_altitude, 0, 900)
         
         Front()
         
@@ -324,12 +324,12 @@ def Cameras():
             data = math.degrees(vehicle.attitude.pitch)
             data2 = math.degrees(vehicle.attitude.roll)
             data_altitude=vehicle.location.global_frame.alt
-            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+            Graph = grapher.Graph(6, 4, data, data_altitude, Launch_in_seconds, fname)
         else:
             data = 0
             data2 = 0
             data_altitude = 0
-            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
+            Graph = grapher.Graph(6, 4, data, data_altitude, 0, 900)
 
         border = pygame.Rect(4, 199, 632, 482)
         pygame.draw.rect(screen, (0, 0, 0), border)
@@ -394,12 +394,12 @@ def Options():
             data = math.degrees(vehicle.attitude.pitch)
             data2 = math.degrees(vehicle.attitude.roll)
             data_altitude=vehicle.location.global_frame.alt
-            Graph = grapher.Graph(3, 3, data, data_altitude, Launch_in_seconds, fname)
+            Graph = grapher.Graph(6, 4, data, data_altitude, Launch_in_seconds, fname)
         else:
             data = 0
             data2 = 0
             data_altitude = 0
-            Graph = grapher.Graph(3, 3, data, data_altitude, 0, 900)
+            Graph = grapher.Graph(6, 4, data, data_altitude, 0, 900)
         
         border = pygame.Rect(39, 99, 592, 602)
         pygame.draw.rect(screen, (0, 0, 0), border)
