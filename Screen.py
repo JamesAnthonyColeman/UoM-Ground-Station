@@ -128,7 +128,7 @@ def Front():
     pygame.draw.rect(screen, (255, 0, 0), button_5)
     screen.blit(img5, (420, 40))
 
-
+    Connection()
     pygame.display.update()
 
 def Connection():
@@ -208,7 +208,7 @@ def Main():
         altimeter_dial.draw(screen)
         Front()
 
-        Connection()
+        #Connection()
         pygame.display.update()
         click = False
         #event handler
@@ -255,7 +255,7 @@ def Grapher():
         Graph.draw(screen,703, 300,X,Z)
         Front()
         
-        Connection()
+        #Connection()
         pygame.display.update()
         click = False
         #event handler
@@ -294,7 +294,7 @@ def Data():
         
         Front()
         
-        Connection()
+        #Connection()
         pygame.display.update()
         click = False
         #event handler
@@ -364,7 +364,7 @@ def Cameras():
         screen.blit(anafeed, (690, 400))
 
         Front()
-        Connection()
+        #Connection()
         pygame.display.update()
         click = False
         #event handler
@@ -457,7 +457,7 @@ def Options():
 
         Front()
 
-        Connection()
+        #Connection()
         pygame.display.update()
         click = False
         #event handler
