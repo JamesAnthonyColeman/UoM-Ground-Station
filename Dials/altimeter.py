@@ -76,7 +76,7 @@ class Altitude():
         screen.blit(self.image1, (self.rect.x, self.rect.y))
         c_x, c_y = self.rect.x+Width//2, self.rect.y+Height//2
         screen.blit(self.image2, (c_x-Width//6,c_y+Height//12))
-        self.draw_text(str(self.data) , self.font, self.colour, c_x-Width//6+15, c_y+Height//7, screen) 
+        self.draw_text(str(round(self.data,4)) + ' m' , self.font, self.colour, c_x-Width//6+11, c_y+Height//7, screen) 
         centre = (c_x, c_y)
         
         ten_thousands_theta= angle(self.data, ten_thousands) 
