@@ -32,12 +32,16 @@ class Graph():
                 f.close()
 
 
-    def draw(self, screen, x, y, rowx, rowy):
+    def draw(self, screen, x, y, rowx, rowy, data_name):
         self.x=x
         self.y=y
         self.rowx=rowx
         self.rowy=rowy
+        self.data=data_name
         fig = pylab.figure(figsize=[self.width, self.height], dpi=100) # 100 dots per inch, so the resulting buffer is 400x400 pixels
+        pylab.xlabel('Time (s)')
+        pylab.ylabel(data_name)
+        pylab.title(data_name +'vs Time')
         ax = fig.gca()
         ax.plot(rowx,rowy)
         canvas = agg.FigureCanvasAgg(fig)
