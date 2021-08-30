@@ -35,6 +35,9 @@ frontpic = pygame.image.load('Assets/CS_15.jpg').convert_alpha()
 intro1 = pygame.image.load('Assets/UOM_White_bg.jpg').convert_alpha()
 logo = pygame.image.load('Assets/TAB_col_background.png').convert_alpha()
 
+# Define longitude and latitude of top left and bottom right corners of map
+long1,lat1,long2,lat2=-2.4664,53.5733,-2.4015,53.5459
+
 
 # Screen setup veriables
 clock.tick(FPS)
@@ -74,23 +77,24 @@ def Intro():
 def Front():
     global Connected
     global click
-    
+
     mx, my = pygame.mouse.get_pos()
     # Tool bar
-    ToolBackground = pygame.Rect(0, 0, 1280, 80) # Background
+    ToolBackground = pygame.Rect(0, 0, 1280, 80)  # Background
     pygame.draw.rect(screen, (0, 255, 0), ToolBackground)
     LogoWidth = logo.get_width()
     LogoHeight = logo.get_height()
-    Logoscale = 0.34 #0.27
-    Logo = pygame.transform.scale(logo, (int(LogoWidth * Logoscale), int(LogoHeight * Logoscale))) # Logo
+    Logoscale = 0.34  # 0.27
+    Logo = pygame.transform.scale(logo, (int(LogoWidth * Logoscale), int(LogoHeight * Logoscale)))  # Logo
     screen.blit(Logo, (0, 0))
     # Ground station text
 
-    button_1 = pygame.Rect(200, 0, 200, 30) # Main
-    button_2 = pygame.Rect(420, 0, 200, 30) # Grapher
-    button_3 = pygame.Rect(640, 0, 200, 30) # Data
-    button_4 = pygame.Rect(200, 40, 200, 30) # Cameras
-    button_5 = pygame.Rect(420, 40, 200, 30) # Options
+    button_1 = pygame.Rect(200, 0, 200, 30)  # Main
+    button_2 = pygame.Rect(420, 0, 200, 30)  # Grapher
+    button_3 = pygame.Rect(640, 0, 200, 30)  # Data
+    button_4 = pygame.Rect(200, 40, 200, 30)  # Cameras
+    button_5 = pygame.Rect(420, 40, 200, 30)  # Options
+    button_7 = pygame.Rect(640,40,200,30)    #Map
     if button_1.collidepoint((mx, my)):
         if click:
             click = False
@@ -111,12 +115,17 @@ def Front():
         if click:
             click = False
             Options()
+    if button_7.collidepoint((mx, my)):
+        if click:
+            click = False
+            Map()
     font = pygame.font.SysFont('Futura', 30)
     img1 = font.render('Main', True, (0, 0, 0))
     img2 = font.render('Grapher', True, (0, 0, 0))
     img3 = font.render('Data', True, (0, 0, 0))
     img4 = font.render('Camera', True, (0, 0, 0))
-    img5 = font.render('Options', True, (0, 0, 0))        
+    img5 = font.render('Options', True, (0, 0, 0))
+    img7 = font.render('Map', True, (0, 0, 0))
     pygame.draw.rect(screen, (255, 0, 0), button_1)
     screen.blit(img1, (200, 0))
     pygame.draw.rect(screen, (255, 0, 0), button_2)
@@ -127,6 +136,9 @@ def Front():
     screen.blit(img4, (200, 40))
     pygame.draw.rect(screen, (255, 0, 0), button_5)
     screen.blit(img5, (420, 40))
+
+    pygame.draw.rect(screen, (255, 0, 0), button_7)
+    screen.blit(img7, (640, 40))
 
     Connection()
     pygame.display.update()
@@ -471,7 +483,38 @@ def Options():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
+def Map():
 
+    global click
+
+    running=True
+    while running:
+
+        if Connected == True:
+            heading=vehicle.heading
+            map = map_module.Map(long1, lat1, long2, lat2, WIDTH, HEIGHT, 360 - heading)
+            map.draw(screen, vehicle.location)
+        else:
+            map=map_module.Map(long1, lat1, long2, lat2, WIDTH, HEIGHT, 0)
+            map.default_draw(screen)
+
+
+
+        Front()
+        # Connection()
+        pygame.display.update()
+        click = False
+        # event handler
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
 
 
 
