@@ -82,20 +82,35 @@ def Front():
     mx, my = pygame.mouse.get_pos()
     # Tool bar
     ToolBackground = pygame.Rect(0, 0, 1280, 80)  # Background
-    pygame.draw.rect(screen, (0, 255, 0), ToolBackground)
+    pygame.draw.rect(screen, (130, 130, 130), ToolBackground)
     LogoWidth = logo.get_width()
     LogoHeight = logo.get_height()
     Logoscale = 0.34  # 0.27
     Logo = pygame.transform.scale(logo, (int(LogoWidth * Logoscale), int(LogoHeight * Logoscale)))  # Logo
     screen.blit(Logo, (0, 0))
-    # Ground station text
 
-    button_1 = pygame.Rect(200, 0, 200, 30)  # Main
-    button_2 = pygame.Rect(420, 0, 200, 30)  # Grapher
-    button_3 = pygame.Rect(640, 0, 200, 30)  # Data
-    button_4 = pygame.Rect(200, 40, 200, 30)  # Cameras
-    button_5 = pygame.Rect(420, 40, 200, 30)  # Options
-    button_7 = pygame.Rect(640,40,200,30)    #Map
+    # Button border
+    border = pygame.Rect(199, 4, 202, 32) # Main border
+    pygame.draw.rect(screen, (0, 0, 0), border)
+    border = pygame.Rect(419, 4, 202, 32) # Grapher border
+    pygame.draw.rect(screen, (0, 0, 0), border)
+    border = pygame.Rect(639, 4, 202, 32) # Data border
+    pygame.draw.rect(screen, (0, 0, 0), border)
+    border = pygame.Rect(199, 44, 202, 32) # Cameras border
+    pygame.draw.rect(screen, (0, 0, 0), border)
+    border = pygame.Rect(419, 44, 202, 32) # Options border
+    pygame.draw.rect(screen, (0, 0, 0), border)
+    border = pygame.Rect(639, 44, 202, 32) # Map border
+    pygame.draw.rect(screen, (0, 0, 0), border)
+    border = pygame.Rect(859, 4, 202, 32) # Connect border
+    pygame.draw.rect(screen, (0, 0, 0), border)
+
+    button_1 = pygame.Rect(200, 5, 200, 30)  # Main
+    button_2 = pygame.Rect(420, 5, 200, 30)  # Grapher
+    button_3 = pygame.Rect(640, 5, 200, 30)  # Data
+    button_4 = pygame.Rect(200, 45, 200, 30)  # Cameras
+    button_5 = pygame.Rect(420, 45, 200, 30)  # Options
+    button_7 = pygame.Rect(640,45,200,30)    #Map
     if button_1.collidepoint((mx, my)):
         if click:
             click = False
@@ -127,19 +142,19 @@ def Front():
     img4 = font.render('Camera', True, (0, 0, 0))
     img5 = font.render('Options', True, (0, 0, 0))
     img7 = font.render('Map', True, (0, 0, 0))
-    pygame.draw.rect(screen, (255, 0, 0), button_1)
-    screen.blit(img1, (200, 0))
-    pygame.draw.rect(screen, (255, 0, 0), button_2)
-    screen.blit(img2, (420, 0))
-    pygame.draw.rect(screen, (255, 0, 0), button_3)
-    screen.blit(img3, (640, 0))
-    pygame.draw.rect(screen, (255, 0, 0), button_4)
-    screen.blit(img4, (200, 40))
-    pygame.draw.rect(screen, (255, 0, 0), button_5)
-    screen.blit(img5, (420, 40))
+    pygame.draw.rect(screen, (200, 200, 200), button_1)
+    screen.blit(img1, (200, 10))
+    pygame.draw.rect(screen, (200, 200, 200), button_2)
+    screen.blit(img2, (420, 10))
+    pygame.draw.rect(screen, (200, 200, 200), button_3)
+    screen.blit(img3, (640, 10))
+    pygame.draw.rect(screen, (200, 200, 200), button_4)
+    screen.blit(img4, (200, 50))
+    pygame.draw.rect(screen, (200, 200, 200), button_5)
+    screen.blit(img5, (420, 50))
 
-    pygame.draw.rect(screen, (255, 0, 0), button_7)
-    screen.blit(img7, (640, 40))
+    pygame.draw.rect(screen, (200, 200, 200), button_7)
+    screen.blit(img7, (640, 50))
 
     Connection()
     pygame.display.update()
@@ -151,7 +166,7 @@ def Connection():
         mx, my = pygame.mouse.get_pos()
         font = pygame.font.SysFont('Futura', 30)
         if Connected == False:
-            button_6 = pygame.Rect(860, 0, 200, 30) # Connect button
+            button_6 = pygame.Rect(860, 5, 200, 30) # Connect button
             if button_6.collidepoint((mx, my)):
                 if click:
                     Connected = True
@@ -159,22 +174,22 @@ def Connection():
                     global vehicle 
                     vehicle = connect('com7', wait_ready=True, baud=9600)
                     print("Connecting to vehicle")
-            pygame.draw.rect(screen, (255, 0, 0), button_6)
+            pygame.draw.rect(screen, (200, 200, 200), button_6)
             img6 = font.render('Connect', True, (0, 0, 0))
-            screen.blit(img6, (860, 0))
+            screen.blit(img6, (860, 10))
             global Launch_in_seconds
             Launch_in_seconds=time.time()
             global fname
             fname = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S.csv')
         else:
-            button_6 = pygame.Rect(860, 0, 200, 30) # Connect button
+            button_6 = pygame.Rect(860, 5, 200, 30) # Connect button
             if button_6.collidepoint((mx, my)):
                 if click:
                     Connected = False
                     vehicle.close()
-            pygame.draw.rect(screen, (255, 0, 0), button_6)
+            pygame.draw.rect(screen, (200, 200, 200), button_6)
             img6 = font.render('Connected', True, (0, 0, 0))
-            screen.blit(img6, (860, 0))
+            screen.blit(img6, (860, 10))
             data = math.degrees(vehicle.attitude.pitch)
             data_altitude=vehicle.location.global_frame.alt
             Graph = grapher.Graph(6, 4, data, data_altitude, Launch_in_seconds, fname)
@@ -204,10 +219,10 @@ def Main():
 
 
         # Dials defined
-        airspeed_dial = airspeed_indicator.Airspeed( 0, 0, 1, data, 0.4, -5, 0.185,0.125)
-        horizon = artificial_horizon.Horizon(103,0)
-        altimeter_dial = altimeter.Altitude(402, 0, data_altitude)
-        compass_dial = compass.Compass(103, 300, 1, data)
+        airspeed_dial = airspeed_indicator.Airspeed( 0, 100, 1, data, 0.4, -5, 0.185,0.125)
+        horizon = artificial_horizon.Horizon(103,100)
+        altimeter_dial = altimeter.Altitude(402, 100, data_altitude)
+        compass_dial = compass.Compass(103, 400, 1, data)
         
         # Used for locating things on the page
         #pos = pygame.mouse.get_pos() 
@@ -245,7 +260,7 @@ def Grapher():
     running = True
     global click
     while running:
-        screen.fill((0, 155, 0))
+        screen.fill((170, 170, 170))
         if Connected == True:
             data = math.degrees(vehicle.attitude.pitch)
             data2 = math.degrees(vehicle.attitude.roll)
@@ -264,8 +279,8 @@ def Grapher():
             Z = 0
             Graph = grapher.Graph(6, 4, data, data_altitude, 0, 900)
         
-        Graph.draw(screen,0, 0,X,Y,'Pitch (degrees)')
-        Graph.draw(screen,602, 0,X,Z,'Altitude (m)')
+        Graph.draw(screen,0, 100,X,Y,'Pitch (degrees)')
+        Graph.draw(screen,602, 100,X,Z,'Altitude (m)')
         Front()
         
         #Connection()
@@ -305,8 +320,18 @@ def Data():
             data_altitude = 0
             Graph = grapher.Graph(6, 4, data, data_altitude, 0, 900)
         
-        Front()
+
+        border = pygame.Rect(39, 99, 592, 602)
+        pygame.draw.rect(screen, (0, 0, 0), border)
+        border = pygame.Rect(639, 99, 602, 302)
+        pygame.draw.rect(screen, (0, 0, 0), border)
+
+        resbox = pygame.Rect(40, 100, 590, 600)
+        pygame.draw.rect(screen, (200, 200, 200), resbox)
+        creditbox = pygame.Rect(640, 100, 600, 300)
+        pygame.draw.rect(screen, (200, 200, 200), creditbox)
         
+        Front()
         #Connection()
         pygame.display.update()
         click = False

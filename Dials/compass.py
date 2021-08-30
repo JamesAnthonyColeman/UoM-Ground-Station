@@ -52,7 +52,7 @@ class Compass():
 
         screen.blit(self.image, (self.rect.x, self.rect.y))
         #screen.blit(self.image2, ((self.rect.x + (13*self.scale)), (self.rect.y + (13*self.scale))))
-        pos = (253, 450)
+        pos = (253, 450 + 100)
         
         # calcaulate the axis aligned bounding box of the rotated image
         w, h       = self.image2.get_size()
