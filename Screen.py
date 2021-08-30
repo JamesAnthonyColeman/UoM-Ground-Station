@@ -11,6 +11,7 @@ from Dials import artificial_horizon
 from Dials import altimeter
 from Dials import compass
 from Dials import grapher
+from Dials import map_module
 from dronekit import connect, VehicleMode
 import time
 import datetime
