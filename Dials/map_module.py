@@ -1,13 +1,3 @@
-import csv
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from PIL import Image, ImageDraw
-from dronekit import connect
-import serial
-import sys
-
-import opencv
 import pygame
 
 
