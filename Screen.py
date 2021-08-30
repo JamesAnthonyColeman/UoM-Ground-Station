@@ -12,6 +12,7 @@ from Dials import altimeter
 from Dials import compass
 from Dials import grapher
 from Dials import map_module
+from Dials import top
 from dronekit import connect, VehicleMode
 import time
 import datetime
@@ -223,6 +224,7 @@ def Main():
         horizon = artificial_horizon.Horizon(103,100)
         altimeter_dial = altimeter.Altitude(402, 100, data_altitude)
         compass_dial = compass.Compass(103, 400, 1, data)
+        topdown = top.Top(402, 400, 0.5, 800, 120, 0.35)
         
         # Used for locating things on the page
         #pos = pygame.mouse.get_pos() 
@@ -234,6 +236,7 @@ def Main():
         airspeed_dial.draw(screen)
         horizon.update(screen, data2, data)
         altimeter_dial.draw(screen)
+        topdown.draw(screen)
         Front()
 
         #Connection()
