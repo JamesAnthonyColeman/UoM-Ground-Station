@@ -46,6 +46,7 @@ clock.tick(FPS)
 screen.fill((0, 0, 0))
 click = False
 Connected = False
+Name = 'Empty'
 
 
 
@@ -143,19 +144,48 @@ def Front():
     img4 = font.render('Camera', True, (0, 0, 0))
     img5 = font.render('Options', True, (0, 0, 0))
     img7 = font.render('Map', True, (0, 0, 0))
-    pygame.draw.rect(screen, (200, 200, 200), button_1)
-    screen.blit(img1, (200, 10))
-    pygame.draw.rect(screen, (200, 200, 200), button_2)
-    screen.blit(img2, (420, 10))
-    pygame.draw.rect(screen, (200, 200, 200), button_3)
-    screen.blit(img3, (640, 10))
-    pygame.draw.rect(screen, (200, 200, 200), button_4)
-    screen.blit(img4, (200, 50))
-    pygame.draw.rect(screen, (200, 200, 200), button_5)
-    screen.blit(img5, (420, 50))
 
-    pygame.draw.rect(screen, (200, 200, 200), button_7)
-    screen.blit(img7, (640, 50))
+    if Name == 'Main':
+        pygame.draw.rect(screen, (109, 00, 157), button_1)
+        screen.blit(img1, (200, 10))
+    else:
+        pygame.draw.rect(screen, (200, 200, 200), button_1)
+        screen.blit(img1, (200, 10))
+
+    if Name == 'Grapher':
+        pygame.draw.rect(screen, (109, 00, 157), button_2)
+        screen.blit(img2, (420, 10))
+    else:
+        pygame.draw.rect(screen, (200, 200, 200), button_2)
+        screen.blit(img2, (420, 10))
+
+    if Name == 'Data':
+        pygame.draw.rect(screen, (109, 00, 157), button_3)
+        screen.blit(img3, (640, 10))
+    else:
+        pygame.draw.rect(screen, (200, 200, 200), button_3)
+        screen.blit(img3, (640, 10))
+
+    if Name == 'Cameras':
+        pygame.draw.rect(screen, (109, 00, 157), button_4)
+        screen.blit(img4, (200, 50))
+    else:
+        pygame.draw.rect(screen, (200, 200, 200), button_4)
+        screen.blit(img4, (200, 50))
+
+    if Name == 'Options':
+        pygame.draw.rect(screen, (109, 00, 157), button_5)
+        screen.blit(img5, (420, 50))
+    else:
+        pygame.draw.rect(screen, (200, 200, 200), button_5)
+        screen.blit(img5, (420, 50))
+
+    if Name == 'Map':
+        pygame.draw.rect(screen, (109, 00, 157), button_7)
+        screen.blit(img7, (640, 50))
+    else:
+        pygame.draw.rect(screen, (200, 200, 200), button_7)
+        screen.blit(img7, (640, 50))
 
     Connection()
     pygame.display.update()
@@ -202,6 +232,8 @@ def Connection():
 """This screen will have all the main dials on"""
 def Main():
     global click
+    global Name
+    Name = 'Main'
     run = True
     while run:
         screen.fill((170, 170, 170))
@@ -262,6 +294,8 @@ def Main():
 def Grapher():
     running = True
     global click
+    global Name
+    Name = 'Grapher'
     while running:
         screen.fill((170, 170, 170))
         if Connected == True:
@@ -310,6 +344,8 @@ def Grapher():
 def Data():
     running = True
     global click
+    global Name
+    Name = 'Data'
     while running:
         screen.fill((170, 170, 170))
         if Connected == True:
@@ -359,6 +395,8 @@ def Data():
 def Cameras():
     running = True
     global click
+    global Name
+    Name = 'Cameras'
     while running:
         screen.fill((170, 170, 170))
         if Connected == True:
@@ -429,6 +467,8 @@ def Cameras():
 def Options():
     running = True
     global click
+    global Name
+    Name = 'Options'
     while running:
         screen.fill((170, 170, 170))
         if Connected == True:
@@ -515,6 +555,8 @@ def Options():
 def Map():
 
     global click
+    global Name
+    Name = 'Map'
 
     running=True
     while running:
