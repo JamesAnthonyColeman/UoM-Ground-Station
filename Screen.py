@@ -200,11 +200,14 @@ def Connection():
             button_6 = pygame.Rect(860, 5, 200, 30) # Connect button
             if button_6.collidepoint((mx, my)):
                 if click:
-                    Connected = True
-                    # Establishing a connection
-                    global vehicle 
-                    vehicle = connect('com7', wait_ready=True, baud=9600)
-                    print("Connecting to vehicle")
+                    try:
+                        Connected = True
+                        # Establishing a connection
+                        global vehicle 
+                        vehicle = connect('com7', wait_ready=True, baud=9600)
+                        #print("Connecting to vehicle")
+                    except:
+                        Connected = False
             pygame.draw.rect(screen, (200, 200, 200), button_6)
             img6 = font.render('Connect', True, (0, 0, 0))
             screen.blit(img6, (860, 10))
@@ -369,6 +372,10 @@ def Data():
         pygame.draw.rect(screen, (200, 200, 200), resbox)
         creditbox = pygame.Rect(640, 100, 600, 300)
         pygame.draw.rect(screen, (200, 200, 200), creditbox)
+
+        # This is where the data is written and included on the page
+        
+
         
         Front()
         #Connection()
