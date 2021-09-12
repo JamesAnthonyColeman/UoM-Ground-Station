@@ -374,7 +374,19 @@ def Data():
         pygame.draw.rect(screen, (200, 200, 200), creditbox)
 
         # This is where the data is written and included on the page
-        
+        if Connected == True:
+            font = pygame.font.SysFont('Futura', 30)
+            text = 'Last heartbeat: ' + str(vehicle.last_heartbeat) + ' (Last response from UAV)'
+            Heartbeat = font.render(text , True, (0, 0, 0))
+            screen.blit(Heartbeat, (100, 110))
+        else:
+            font = pygame.font.SysFont('Futura', 70)
+            text = 'Connection not made '
+            Heartbeat = font.render(text , True, (0, 0, 0))
+            screen.blit(Heartbeat, (80, 210))
+            text = 'No Data to display '
+            Heartbeat = font.render(text , True, (0, 0, 0))
+            screen.blit(Heartbeat, (100, 410))
 
         
         Front()
