@@ -365,28 +365,170 @@ def Data():
 
         border = pygame.Rect(39, 99, 592, 602)
         pygame.draw.rect(screen, (0, 0, 0), border)
-        border = pygame.Rect(639, 99, 602, 302)
+        border = pygame.Rect(639, 99, 607, 302)
         pygame.draw.rect(screen, (0, 0, 0), border)
 
         resbox = pygame.Rect(40, 100, 590, 600)
         pygame.draw.rect(screen, (200, 200, 200), resbox)
-        creditbox = pygame.Rect(640, 100, 600, 300)
+        creditbox = pygame.Rect(640, 100, 605, 300)
         pygame.draw.rect(screen, (200, 200, 200), creditbox)
 
         # This is where the data is written and included on the page
         if Connected == True:
-            font = pygame.font.SysFont('Futura', 30)
-            text = 'Last heartbeat: ' + str(vehicle.last_heartbeat) + ' (Last response from UAV)'
+            font = pygame.font.SysFont('Futura', 25)
+            text = 'Last heartbeat (Last response from UAV): ' + str(vehicle.last_heartbeat) 
             Heartbeat = font.render(text , True, (0, 0, 0))
-            screen.blit(Heartbeat, (100, 110))
+            screen.blit(Heartbeat, (50, 110))
+
+            text = 'Battery Voltage, V: ' + str(vehicle.battery.voltage) + ' V'
+            Batvolt = font.render(text , True, (0, 0, 0))
+            screen.blit(Batvolt, (50, 140))
+
+            text = 'Battery Current, A: ' + str(vehicle.battery.current) + ' A'
+            Batcurr = font.render(text , True, (0, 0, 0))
+            screen.blit(Batcurr, (50, 170))
+
+            text = 'Battery Level: ' + str(vehicle.battery.level)
+            Batcurr = font.render(text , True, (0, 0, 0))
+            screen.blit(Batcurr, (50, 200))
+
+            text = 'Velocity (x, y, z), ms^-1: ' + str(vehicle.velocity)
+            Velo = font.render(text , True, (0, 0, 0))
+            screen.blit(Velo, (50, 230))
+
+            text = 'Attitude (pitch, yaw, roll), degrees: ' + str(round(math.degrees(vehicle.attitude.pitch),4)) + '  ' + str(round(math.degrees(vehicle.attitude.yaw),4)) + '  ' + str(round(math.degrees(vehicle.attitude.roll),4)) 
+            Velo = font.render(text , True, (0, 0, 0))
+            screen.blit(Velo, (50, 260))
+
+            text = 'Armed: ' + str(vehicle.armed)
+            Armed = font.render(text , True, (0, 0, 0))
+            screen.blit(Armed, (50, 290))
+
+            text = 'Is armable: ' + str(vehicle.is_armable)
+            armable = font.render(text , True, (0, 0, 0))
+            screen.blit(armable, (50, 320))
+
+            text = 'System Status: ' + str(vehicle.system_status)
+            stat = font.render(text , True, (0, 0, 0))
+            screen.blit(stat, (50, 350))
+
+            text = 'Heading: ' + str(vehicle.heading)
+            heading = font.render(text , True, (0, 0, 0))
+            screen.blit(heading, (50, 380))
+
+            text = 'Ground speed: ' + str(vehicle.groundspeed)
+            heading = font.render(text , True, (0, 0, 0))
+            screen.blit(heading, (50, 410))
+
+            text = 'Airspeed: ' + str(vehicle.airspeed)
+            airspeed = font.render(text , True, (0, 0, 0))
+            screen.blit(airspeed, (50, 440))
+
+            text = 'Channels: '
+            channels = font.render(text , True, (0, 0, 0))
+            screen.blit(channels, (50, 470))
+
+            text = str(vehicle.channels)
+            fontnew = pygame.font.SysFont('Futura', 20)
+            channels = fontnew.render(text , True, (0, 0, 0))
+            screen.blit(channels, (50, 500))
+
+            text = 'Home Location: ' + str(vehicle.home_location)
+            home = font.render(text , True, (0, 0, 0))
+            screen.blit(home, (50, 530))
+
+            text = 'GPS satellites visible: ' + str(vehicle.gps_0.satellites_visible)
+            Satvis = font.render(text , True, (0, 0, 0))
+            screen.blit(Satvis, (50, 560))
+
+            text = 'GPS fix type: ' + str(vehicle.gps_0.fix_type)
+            GPSfix = font.render(text , True, (0, 0, 0))
+            screen.blit(GPSfix, (50, 590))
+
+            text = 'GPS Altitude (global frame): ' + str(vehicle.location.global_frame.alt)
+            GPSaltgf = font.render(text , True, (0, 0, 0))
+            screen.blit(GPSaltgf, (50, 620))
+
+            text = 'GPS Altitude (global relative frame): ' + str(vehicle.location.global_relative_frame.alt)
+            GPSaltgf = font.render(text , True, (0, 0, 0))
+            screen.blit(GPSaltgf, (50, 6200))
+
+            #Red background
+            ch1 = pygame.Rect(645, 105, 70, 290)
+            pygame.draw.rect(screen, (255, 0, 0), ch1)
+            text = 'ch1 ' 
+            ch = font.render(text , True, (0, 0, 0))
+            screen.blit(ch, (660, 250))
+
+            ch2 = pygame.Rect(720, 105, 70, 290)
+            pygame.draw.rect(screen, (255, 0, 0), ch2)
+            text = 'ch2 ' 
+            ch = font.render(text , True, (0, 0, 0))
+            screen.blit(ch, (735, 250))
+
+            ch3 = pygame.Rect(795, 105, 70, 290)
+            pygame.draw.rect(screen, (255, 0, 0), ch3)
+            text = 'ch3 ' 
+            ch = font.render(text , True, (0, 0, 0))
+            screen.blit(ch, (810, 250))
+
+            ch4 = pygame.Rect(870, 105, 70, 290)
+            pygame.draw.rect(screen, (255, 0, 0), ch4)
+            text = 'ch4 ' 
+            ch = font.render(text , True, (0, 0, 0))
+            screen.blit(ch, (885, 250))
+
+            ch5 = pygame.Rect(945, 105, 70, 290)
+            pygame.draw.rect(screen, (255, 0, 0), ch5)
+            text = 'ch5 ' 
+            ch = font.render(text , True, (0, 0, 0))
+            screen.blit(ch, (960, 250))
+
+            ch6 = pygame.Rect(1020, 105, 70, 290)
+            pygame.draw.rect(screen, (255, 0, 0), ch6)
+            text = 'ch6 ' 
+            ch = font.render(text , True, (0, 0, 0))
+            screen.blit(ch, (1035, 250))
+
+            ch7 = pygame.Rect(1095, 105, 70, 290)
+            pygame.draw.rect(screen, (255, 0, 0), ch7)
+            text = 'ch7 ' 
+            ch = font.render(text , True, (0, 0, 0))
+            screen.blit(ch, (1110, 250))
+
+            ch8 = pygame.Rect(1170, 105, 70, 290)
+            pygame.draw.rect(screen, (255, 0, 0), ch8)
+            text = 'ch8 ' 
+            ch = font.render(text , True, (0, 0, 0))
+            screen.blit(ch, (1185, 250))
+            #Grey overlay
+            Height = (data/90) * 290
+            ch1 = pygame.Rect(645, 105, 70, Height)
+            pygame.draw.rect(screen, (200, 200, 200), ch1)
+            ch2 = pygame.Rect(720, 105, 70, Height)
+            pygame.draw.rect(screen, (200, 200, 200), ch2)
+            ch3 = pygame.Rect(795, 105, 70, Height)
+            pygame.draw.rect(screen, (200, 200, 200), ch3)
+            ch4 = pygame.Rect(870, 105, 70, Height)
+            pygame.draw.rect(screen, (200, 200, 200), ch4)
+            ch5 = pygame.Rect(945, 105, 70, Height)
+            pygame.draw.rect(screen, (200, 200, 200), ch5)
+            ch6 = pygame.Rect(1020, 105, 70, Height)
+            pygame.draw.rect(screen, (200, 200, 200), ch6)
+            ch7 = pygame.Rect(1095, 105, 70, Height)
+            pygame.draw.rect(screen, (200, 200, 200), ch7)
+            ch8 = pygame.Rect(1170, 105, 70, Height)
+            pygame.draw.rect(screen, (200, 200, 200), ch8)
         else:
             font = pygame.font.SysFont('Futura', 70)
             text = 'Connection not made '
             Heartbeat = font.render(text , True, (0, 0, 0))
             screen.blit(Heartbeat, (80, 210))
+            screen.blit(Heartbeat, (680, 210))
             text = 'No Data to display '
             Heartbeat = font.render(text , True, (0, 0, 0))
             screen.blit(Heartbeat, (100, 410))
+            
 
         
         Front()
